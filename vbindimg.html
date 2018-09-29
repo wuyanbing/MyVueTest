@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="vue.js"></script>
+    <style>
+    .blue{
+        color:blue;
+    }
+    </style>
+</head>
+
+<body> 
+    <div id="app">
+        <template>
+            <img v-bind:src="imageSrc" alt="image" /> 
+        </template>
+       <div style="background-color:green" 
+            :class="{'blue':isBlue}"></div>
+            <input type="text" :value="valattr" v-on:input="inputChange" />
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    imageSrc: '',
+                    images: [
+                        'img/1.jpg',
+                        'img/2.jpg',
+                        'img/3.jpg',
+                        'img/4.jpg'
+                    ],
+                    valattr:'some thing'
+                }
+            },
+            methods:{
+                inputChange:function(e){
+                    console.log(e.target.value);
+                    this.valattr=e.target.value;
+                }
+            },
+            computed: {
+                isBlue: function () { return Math.random() > 0.5; }
+            },
+            mounted() {
+                let vm = this;
+                let count = 0;
+                // setInterval(function () {
+                //     vm.imageSrc = vm.images[count++];
+                //     if (count == vm.images.length) {
+                //         count = 0;
+                //     }
+                // }, 1500)
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

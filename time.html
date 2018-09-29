@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <el-date-picker v-model="currWeek" type="daterange" range-separator="--" start-placeholder="begin"
+            end-placeholder="end" placeholder="">
+        </el-date-picker>
+        <el-button type="primary" @click='setLastWeek'>last</el-button>
+        <el-button type="primary" @click='setCurrentWeek'>current</el-button>
+        <el-button type="primary" @click='setNextWeek'>next</el-button>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            title: 'hello there',
+            btime: '',
+            etime: '',
+            currWeek: '',
+            inHosDate: new Date('2018-9-9')
+        },
+        computed: {
+            getWeekDay: function () {
+                return [this.btime,this.etime];
+            }
+        },
+        methods: {
+            setCurrentWeek: function () {
+                this.$message.info('c');
+                let gap = Date.now() - this.inHosDate.getTime();
+                let days = gap / 24 / 3600 / 1000;
+                let week = days / 7;
+                this.btime = this.inHosDate.getTime() + (week - 1) * 7 * 24 * 3600 * 1000 + 24 * 3600 * 1000;
+                this.etime = this.inHosDate.getTime() + (week) * 7 * 24 * 3600 * 1000;
+                this.currWeek = [this.btime, this.etime];
+            },
+            setLastWeek: function () {
+                this.btime = this.btime - 7 * 24 * 3600 * 1000;
+                this.etime = this.etime - 7 * 24 * 3600 * 1000;
+                this.currWeek=[this.btime,this.etime];
+            },
+            setNextWeek: function () {
+                this.btime = this.btime + 7 * 24 * 3600 * 1000;
+                this.etime = this.etime + 7 * 24 * 3600 * 1000;
+                this.currWeek=[this.btime,this.etime];
+                console.log(this.btime.format('yyyy-MM-dd'));
+            }
+        }
+    });
+</script>
+
+</html>

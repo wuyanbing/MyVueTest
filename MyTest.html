@@ -1,0 +1,118 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+
+<body style="background-color:whitesmoke;">
+    <div id="app-1" v-bind:class="classObject">
+        <a :href='url' :title="urltitle" @click='clickevent'>myurl</a>
+        origin Message:{{message + 7777}}
+        <br/> {{Math.random()}} {{new Date().toLocaleString()}}
+        <br/> reversedMessage through computed attribute:{{reversedMessage}}
+        <br/> through methods:"{{reverseMessage()}}"
+    </div>
+
+    <div id='app-2'>
+        <p>Using mustaches:{{content}}</p>
+        <p>Using v-html directive:
+            <span v-html='content'></span>
+        </p>
+        <button v-bind:disabled="disableAttr">Button</button>
+    </div>
+
+    <div id="app-3">
+        <ol>
+            <li v-for="(item,index) in items">
+                {{parentData}}-{{item.message}}-{{index}}
+            </li>
+        </ol>
+    </div>
+    <div id="app-4">
+        <ul v-if="todos.length">
+            <li v-for="todo in todos">
+                {{todo.item}}
+            </li>
+        </ul>
+        <p>no more todo item!</p>
+    </div>
+</body>
+<script>
+    var globalVar = "myglobalvar";
+    var app1 = new Vue({
+        el: "#app-1",
+        data: {
+            message: "hello,world",
+
+            url: 'http://www.baidu.com',
+            urltitle: 'this is a url title!',
+            clickevent: function () {
+                alert('this is a click event!')
+            },
+            red: false,
+            green: true
+        },
+        computed: {
+            reversedMessage: function () {
+                //return this.message.split('').reverse().join('');
+                return Date.now();
+            },
+            classObject: function () {
+                return {
+                    red: this.red,
+                    green: this.green
+                }
+            }
+        },
+        methods: {
+            reverseMessage: function () {
+                //return this.message.split('').reverse().join('')  ;
+                return Date.now();
+            }
+        }
+    });
+
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            content: "<span style='color:red'>okkkkkkkkkk</span>",
+            disableAttr: false
+        }
+    });
+
+    var app3 = new Vue({
+        el: "#app-3",
+        data: {
+            parentData: 'oh~parentdata',
+            items: [
+                { message: 'msg1' },
+                { message: 'msg2' }
+            ]
+        }
+    });
+    var app4=new Vue({
+        el:'#app-4',
+        data:{
+            todos:[
+                {item:"learn vue"},
+                {item:'learn mvc'},
+                {item:'learn architecture'}
+            ]
+        }
+    })
+</script>
+
+</html>
